@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\AuthMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Mail\AuthEmail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -38,16 +38,16 @@ class RegisterController extends Controller
 			'token' => $token,
 		]);
 		// send email
-		Mail::to($user->email)->send(new AuthEmail($token));
+		Mail::to($user->email)->send(new AuthMail($token));
 		echo "Cảm ơn bạn đã đăng ký, bây giờ hãy vào email để xác thực";
 	}
 	public function verify($token)
 	{
 		// verify token
-		$user = User::where('verification_token', $token)->first();
+		$user = User::where('token', $token)->first();
 		if ($user) {
 			$user->email_verified_at = now();
-			$user->verification_token = null;
+			$user->token = null;
 			$user->save();
 			return redirect()->route('login')->with('success', 'Xác thực thành công');
 		}

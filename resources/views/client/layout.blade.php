@@ -60,6 +60,30 @@
               aria-expanded="false">
               Danh mục
             </a>
+						<ul class="dropdown-menu dropdown-menu-dark">
+              @foreach($menus as $menu)
+              <li class="nav-item 
+              @if(count($menu->allChildren))
+              dropdown
+              @endif
+              ">
+                <a class="nav-link 
+              @if(count($menu->allChildren))
+              dropdown-toggle
+              @endif
+              {{ request()->routeIs('post.showByCategory', ['categoryId' => $menu->id]) ? 'active' : '' }}"
+                  href="{{ route('post.showByCategory', ['categoryId' => $menu->id]) }}">
+                  {{ $menu->name }}
+                </a>
+                @if(count($menu->allChildren))
+                <ul class="dropdown-menu dropdown-menu-dark">
+
+                  @include('client.components.submenu', ['children' => $menu->allChildren])
+                </ul>
+                @endif
+              </li>
+              @endforeach
+            </ul>
           </li>
 					@if (Auth::check())
 
@@ -97,7 +121,7 @@
       </div>
       <div
         class="col-lg-4 @if(request()->is('post*') || request()->is('login') || request()->is('register')|| request()->is('profile*')) d-none @endif">
-        {{-- @include('client.components.side_widgets', ['categories' => $categories]) --}}
+        @include('client.components.side_widgets', ['categories' => $categories])
       </div>
     </div>
   </div>

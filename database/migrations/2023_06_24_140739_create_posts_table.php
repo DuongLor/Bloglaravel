@@ -21,8 +21,6 @@ return new class extends Migration
 						$table->boolean('is_featured')->default(false);
 						$table->unsignedBigInteger('user_id');
 						$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-						$table->unsignedBigInteger('category_id');
-						$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

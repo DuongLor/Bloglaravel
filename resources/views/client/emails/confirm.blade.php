@@ -8,6 +8,6 @@
 </head>
 <body>
     Đây là email xác thực tài khoản của bạn. Nếu không phải bạn, vui lòng bỏ qua.
-    <p>Link xác thực: <a href="http://laravelblog.test/register/verify/{{ $token }}">Tại đây</a></p>
+    <p>Link xác thực: <a href="http://bloglaravel.test/register/verify/{{ $token }}">Tại đây</a></p>
 </body>
 </html>
